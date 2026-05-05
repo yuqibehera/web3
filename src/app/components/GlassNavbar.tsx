@@ -2,7 +2,7 @@ import { motion } from 'motion/react';
 import { MagneticButton } from './MagneticButton';
 
 export function GlassNavbar() {
-  const navItems = ['Work', 'About'];
+  const navItems = ['Work', 'Sidekick', 'Labs', 'About'];
 
   return (
     <motion.nav

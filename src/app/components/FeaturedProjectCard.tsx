@@ -1,9 +1,9 @@
 import { motion, useMotionValue, useSpring, useTransform } from 'motion/react';
 import { useRef, useState } from 'react';
-import image2 from 'figma:asset/7e5acb5e0eb6f104bef8925c5127db3f201d87a5.png';
-import image3 from 'figma:asset/3c3fc5e1ec8031f2857fdbabaf36b6e178dc4929.png';
-import image4 from 'figma:asset/55a3500366e430ff1c773f025b8b41636801e663.png';
-import image5 from 'figma:asset/2617cef18fee1a5860b67ada945375fff7e4508a.png';
+import image2 from '../../assets/7e5acb5e0eb6f104bef8925c5127db3f201d87a5.png';
+import image3 from '../../assets/3c3fc5e1ec8031f2857fdbabaf36b6e178dc4929.png';
+import image4 from '../../assets/55a3500366e430ff1c773f025b8b41636801e663.png';
+import image5 from '../../assets/2617cef18fee1a5860b67ada945375fff7e4508a.png';
 
 interface FeaturedProjectCardProps {
   title: string;

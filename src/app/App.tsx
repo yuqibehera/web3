@@ -5,9 +5,13 @@ import { MagneticButton } from './components/MagneticButton';
 import { ProjectCard } from './components/ProjectCard';
 import { FeaturedProjectCard } from './components/FeaturedProjectCard';
 import { FloatingObject } from './components/FloatingObject';
+import { LabsPageSection } from './components/LabsPageSection';
+import { SidekickProjectsSection } from './components/SidekickProjectsSection';
 import { useRef, useState, useEffect } from 'react';
-import gestureImage1 from 'figma:asset/21c09d9be33a8bcf477c193540b3be7abfbc7a8b.png';
-import gestureImage2 from 'figma:asset/81f8057985d0becc55d9c1738255f6fb0683613f.png';
+import gestureImage1 from '../assets/21c09d9be33a8bcf477c193540b3be7abfbc7a8b.png';
+import gestureImage2 from '../assets/81f8057985d0becc55d9c1738255f6fb0683613f.png';
+import nexusHero1 from '../assets/nexus-hero-1.png';
+import nexusHero2 from '../assets/nexus-hero-2.png';
 
 export default function App() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -31,7 +35,7 @@ export default function App() {
   }, []);
 
   const featuredProject = {
-    title: 'AI Trading Intelligence System',
+    title: 'TradeKyunik: AI-Powered Trading Journal',
     description:
       'An AI-powered trading journal that goes beyond tracking — it analyzes user behavior, identifies patterns, and highlights where strategies fail. Built to help traders understand why they lose and how to improve decision-making using data-driven insights.',
     tagline: 'Strategy analysis • Behavioral insights • Performance breakdown',
@@ -53,6 +57,7 @@ export default function App() {
         'A collection of modern, visually driven websites focused on motion, clarity, and user experience. Built using AI-assisted workflows and refined with design principles to create clean, high-performing interfaces.',
       tagline: 'Glassmorphism • Motion design • AI-assisted UI',
       tags: ['React', 'Motion', 'Tailwind', 'UX/UI'],
+      images: [nexusHero1, nexusHero2],
     },
     {
       title: 'Algorithm Strategy Engine',
@@ -119,7 +124,7 @@ export default function App() {
               </motion.div>
 
               <h1 className="text-6xl lg:text-7xl leading-tight">
-                <span className="block">I am Yuki</span>
+                <span className="block">HELLO! I am </span>
                 <motion.span
                   className="block bg-gradient-to-r from-[var(--neon-teal)] via-[var(--neon-purple)] to-[var(--neon-blue)] bg-clip-text text-transparent"
                   animate={{
@@ -134,7 +139,7 @@ export default function App() {
                     backgroundSize: '200% 200%',
                   }}
                 >
-                  tradekyunik
+                  Yuki
                 </motion.span>
               </h1>
 
@@ -234,11 +239,10 @@ export default function App() {
 
             <div className="space-y-6 text-white/70 leading-relaxed">
               <p>
-                I'm a creative developer who transforms complex ideas into elegant digital
-                solutions. With expertise spanning modern web technologies, 3D graphics, and AI
-                integration, I bring visions to life with precision and artistry.
-              </p>
+              A creative developer who works on AI systems, interactive interfaces, and experimental ideas that turn complexity into something usable and clear.
 
+              Still early, but focused on one thing: shipping real products, learning fast, and pushing ideas beyond just concepts.
+              </p>
               <p>
                 Passionate about the intersection of{' '}
                 <motion.span
@@ -268,22 +272,13 @@ export default function App() {
         </div>
       </section>
 
+      <SidekickProjectsSection />
+
+      <LabsPageSection />
+
       <footer className="relative py-12 px-6 border-t border-white/5">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-white/40 text-sm">© 2026 All rights reserved</p>
-
-          <div className="flex gap-6">
-            {['GitHub', 'LinkedIn', 'Twitter'].map((social) => (
-              <motion.a
-                key={social}
-                href="#"
-                className="text-white/40 hover:text-white transition-colors text-sm"
-                whileHover={{ scale: 1.1, textShadow: '0 0 20px rgba(0, 240, 255, 0.5)' }}
-              >
-                {social}
-              </motion.a>
-            ))}
-          </div>
+         
         </div>
       </footer>
     </div>
