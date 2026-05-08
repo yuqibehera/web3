@@ -1,4 +1,4 @@
-import { motion, useScroll, useTransform } from 'motion/react';
+import { AnimatePresence, motion, useScroll, useTransform } from 'motion/react';
 import { ParticleField } from './components/ParticleField';
 import { GlassNavbar } from './components/GlassNavbar';
 import { MagneticButton } from './components/MagneticButton';
@@ -12,6 +12,10 @@ import gestureImage1 from '../assets/21c09d9be33a8bcf477c193540b3be7abfbc7a8b.pn
 import gestureImage2 from '../assets/81f8057985d0becc55d9c1738255f6fb0683613f.png';
 import nexusHero1 from '../assets/nexus-hero-1.png';
 import nexusHero2 from '../assets/nexus-hero-2.png';
+import tradeImg1 from '../assets/7e5acb5e0eb6f104bef8925c5127db3f201d87a5.png';
+import tradeImg2 from '../assets/3c3fc5e1ec8031f2857fdbabaf36b6e178dc4929.png';
+import tradeImg3 from '../assets/55a3500366e430ff1c773f025b8b41636801e663.png';
+import tradeImg4 from '../assets/2617cef18fee1a5860b67ada945375fff7e4508a.png';
 
 export default function App() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -34,23 +38,50 @@ export default function App() {
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
-  const featuredProject = {
-    title: 'TradeKyunik: AI-Powered Trading Journal',
-    description:
-      'An AI-powered trading journal that goes beyond tracking — it analyzes user behavior, identifies patterns, and highlights where strategies fail. Built to help traders understand why they lose and how to improve decision-making using data-driven insights.',
-    tagline: 'Strategy analysis • Behavioral insights • Performance breakdown',
-    tags: ['AI/ML', 'Data Analytics', 'Pattern Recognition', 'Trading'],
+  const heroRoles = [
+    'Applied AI systems',
+    'Interactive product builds',
+    'AI-powered tools',
+    'Rapid prototyping',
+    'Product thinking',
+  ];
+  const [heroRoleIndex, setHeroRoleIndex] = useState(0);
+  useEffect(() => {
+    const t = window.setInterval(() => setHeroRoleIndex((i) => (i + 1) % heroRoles.length), 2200);
+    return () => window.clearInterval(t);
+  }, []);
+
+  const tradeKyunik = {
+    title: 'TradeKyunik',
+    tagline: 'AI trading analysis system',
+    tags: ['Behavior analytics', 'Strategy breakdown', 'Decision review'],
+    problem:
+      'Most trading journals store numbers but don’t explain why performance breaks down.',
+    built:
+      'An AI-assisted journal that turns sessions into structured reviews: patterns, mistakes, and the “why” behind outcomes.',
+    outcome:
+      'Faster post-trade clarity and a tighter improvement loop.',
+    stack: ['React', 'AI/LLM', 'Analytics', 'UI systems'],
+    images: [tradeImg1, tradeImg2, tradeImg3, tradeImg4],
+    badge: 'Case study',
+  };
+
+  const gestureControl = {
+    title: 'Neural Gesture-Control Interface',
+    tagline: 'Real-time vision control + 3D brain exploration',
+    tags: ['Real-time interaction', '3D exploration', 'Vision pipeline'],
+    problem:
+      'Turning a vision demo into a usable interface means latency, stability, and clear feedback.',
+    built:
+      'A gesture control layer mapped to UI/3D interactions, including a brain model you can rotate and explore.',
+    outcome:
+      'A stable interaction prototype that makes 3D exploration feel learnable.',
+    stack: ['MediaPipe', 'Computer Vision', 'WebGL', 'React'],
+    images: [gestureImage2],
+    badge: 'Case study',
   };
 
   const projects = [
-    {
-      title: 'Gesture-Controlled Interface System',
-      description:
-        'A real-time interaction system powered by computer vision, allowing users to control digital elements using hand gestures — no keyboard or mouse. Includes 3D object manipulation and an interactive brain visualization model with zoom, rotation, and exploration of neural structures.',
-      tagline: 'Computer vision • Real-time control • 3D interaction',
-      tags: ['MediaPipe', 'Computer Vision', 'WebGL', '3D'],
-      images: [gestureImage1, gestureImage2],
-    },
     {
       title: 'High-Impact UI & Web Experiences',
       description:
@@ -120,11 +151,11 @@ export default function App() {
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.6, delay: 0.1 }}
               >
-                Available for new projects
+                Building applied AI products
               </motion.div>
 
               <h1 className="text-6xl lg:text-7xl leading-tight">
-                <span className="block">HELLO! I am </span>
+                <span className="block text-white/70 text-xl tracking-wide mb-2">Yuki</span>
                 <motion.span
                   className="block bg-gradient-to-r from-[var(--neon-teal)] via-[var(--neon-purple)] to-[var(--neon-blue)] bg-clip-text text-transparent"
                   animate={{
@@ -139,13 +170,34 @@ export default function App() {
                     backgroundSize: '200% 200%',
                   }}
                 >
-                  Yuki
+                  AI product builder
                 </motion.span>
               </h1>
 
-              <p className="text-lg text-white/50 max-w-xl">
-                Creating intelligent systems that analyze, learn, and evolve.
-              </p>
+              <div className="max-w-xl space-y-4">
+                <p className="text-lg text-white/55 leading-relaxed">
+                  I build applied AI systems and interactive products—fast prototypes that turn into real tools.
+                </p>
+                <div className="flex items-center gap-3">
+                  <span className="text-xs text-white/40 tracking-wider uppercase">Focus</span>
+                  <div className="h-px flex-1 bg-white/10" />
+                </div>
+                <div className="flex items-center gap-3 min-h-[28px]">
+                  <div className="text-sm text-white/60">→</div>
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={heroRoles[heroRoleIndex]}
+                      initial={{ opacity: 0, y: 8, filter: 'blur(6px)' }}
+                      animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                      exit={{ opacity: 0, y: -6, filter: 'blur(6px)' }}
+                      transition={{ duration: 0.25, ease: 'easeOut' }}
+                      className="text-sm px-4 py-2 rounded-full bg-white/5 border border-white/10 text-white/80"
+                    >
+                      {heroRoles[heroRoleIndex]}
+                    </motion.div>
+                  </AnimatePresence>
+                </div>
+              </div>
             </motion.div>
 
             <motion.div
@@ -160,7 +212,7 @@ export default function App() {
                   document.getElementById('work')?.scrollIntoView({ behavior: 'smooth' })
                 }
               >
-                View Projects
+                View case studies
               </MagneticButton>
             </motion.div>
           </div>
@@ -186,16 +238,15 @@ export default function App() {
             className="mb-16 text-center"
           >
             <h2 className="text-5xl mb-4 bg-gradient-to-r from-white to-white/60 bg-clip-text text-transparent">
-              Selected Work
+              Selected work
             </h2>
-            <p className="text-white/50 text-lg">
-              Projects that push boundaries and create impact
-            </p>
+            <p className="text-white/50 text-lg">Two shipped systems, then the rest.</p>
           </motion.div>
 
           <div className="space-y-8">
-            {/* Featured Project */}
-            <FeaturedProjectCard {...featuredProject} />
+            {/* Dominant case studies */}
+            <FeaturedProjectCard {...tradeKyunik} />
+            <FeaturedProjectCard {...gestureControl} />
 
             {/* Smaller Projects Grid */}
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">

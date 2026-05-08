@@ -1,20 +1,31 @@
 import { motion, useMotionValue, useSpring, useTransform } from 'motion/react';
-import { useRef, useState } from 'react';
-import image2 from '../../assets/7e5acb5e0eb6f104bef8925c5127db3f201d87a5.png';
-import image3 from '../../assets/3c3fc5e1ec8031f2857fdbabaf36b6e178dc4929.png';
-import image4 from '../../assets/55a3500366e430ff1c773f025b8b41636801e663.png';
-import image5 from '../../assets/2617cef18fee1a5860b67ada945375fff7e4508a.png';
+import { useMemo, useRef, useState } from 'react';
 
 interface FeaturedProjectCardProps {
   title: string;
-  description: string;
   tagline: string;
   tags: string[];
+  problem: string;
+  built: string;
+  outcome: string;
+  stack: string[];
+  images?: string[];
+  badge?: string;
 }
 
-export function FeaturedProjectCard({ title, description, tagline, tags }: FeaturedProjectCardProps) {
+export function FeaturedProjectCard({
+  title,
+  tagline,
+  tags,
+  problem,
+  built,
+  outcome,
+  stack,
+  images,
+  badge = 'Case study',
+}: FeaturedProjectCardProps) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const images = [image2, image3, image4, image5];
+  const gallery = useMemo(() => images ?? [], [images]);
   const cardRef = useRef<HTMLDivElement>(null);
 
   const mouseX = useMotionValue(0);
@@ -87,15 +98,19 @@ export function FeaturedProjectCard({ title, description, tagline, tags }: Featu
             whileHover={{ scale: 1.05 }}
             transition={{ duration: 0.5 }}
           >
-            <motion.img
-              key={currentImageIndex}
-              src={images[currentImageIndex]}
-              alt={`${title} screenshot ${currentImageIndex + 1}`}
-              className="w-full h-full object-cover"
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5 }}
-            />
+            {gallery.length ? (
+              <motion.img
+                key={currentImageIndex}
+                src={gallery[currentImageIndex]}
+                alt={`${title} screenshot ${currentImageIndex + 1}`}
+                className="w-full h-full object-cover"
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5 }}
+              />
+            ) : (
+              <div className="absolute inset-0 bg-gradient-to-br from-[var(--neon-teal)]/10 via-[var(--neon-purple)]/10 to-[var(--neon-blue)]/10" />
+            )}
 
             <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
 
@@ -103,13 +118,16 @@ export function FeaturedProjectCard({ title, description, tagline, tags }: Featu
               className="absolute top-4 right-4 px-4 py-2 rounded-full backdrop-blur-sm bg-[var(--neon-teal)]/20 border border-[var(--neon-teal)]/30 text-sm text-white"
               whileHover={{ scale: 1.1 }}
             >
-              Featured
+              {badge}
             </motion.div>
 
             {/* Image Navigation */}
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-3">
+            {gallery.length > 1 ? (
+              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-3">
               <motion.button
-                onClick={() => setCurrentImageIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1))}
+                onClick={() =>
+                  setCurrentImageIndex((prev) => (prev === 0 ? gallery.length - 1 : prev - 1))
+                }
                 className="w-8 h-8 rounded-full backdrop-blur-xl bg-white/10 border border-white/20 flex items-center justify-center text-white hover:bg-white/20 transition-all"
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
@@ -120,7 +138,7 @@ export function FeaturedProjectCard({ title, description, tagline, tags }: Featu
               </motion.button>
 
               <div className="flex gap-2">
-                {images.map((_, index) => (
+                {gallery.map((_, index) => (
                   <motion.button
                     key={index}
                     onClick={() => setCurrentImageIndex(index)}
@@ -138,7 +156,9 @@ export function FeaturedProjectCard({ title, description, tagline, tags }: Featu
               </div>
 
               <motion.button
-                onClick={() => setCurrentImageIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1))}
+                onClick={() =>
+                  setCurrentImageIndex((prev) => (prev === gallery.length - 1 ? 0 : prev + 1))
+                }
                 className="w-8 h-8 rounded-full backdrop-blur-xl bg-white/10 border border-white/20 flex items-center justify-center text-white hover:bg-white/20 transition-all"
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
@@ -147,7 +167,8 @@ export function FeaturedProjectCard({ title, description, tagline, tags }: Featu
                   <path d="M9 18l6-6-6-6" />
                 </svg>
               </motion.button>
-            </div>
+              </div>
+            ) : null}
           </motion.div>
 
           {/* Content */}
@@ -171,9 +192,36 @@ export function FeaturedProjectCard({ title, description, tagline, tags }: Featu
               <p className="text-sm text-[var(--neon-teal)]/80 mb-4">{tagline}</p>
             </div>
 
-            <p className="text-white/70 leading-relaxed text-lg">
-              {description}
-            </p>
+            <div className="space-y-4 text-white/70 leading-relaxed">
+              <div>
+                <div className="text-xs uppercase tracking-wider text-white/40 mb-1">Problem</div>
+                <div className="text-white/75">{problem}</div>
+              </div>
+              <div>
+                <div className="text-xs uppercase tracking-wider text-white/40 mb-1">What I built</div>
+                <div className="text-white/75">{built}</div>
+              </div>
+              <div>
+                <div className="text-xs uppercase tracking-wider text-white/40 mb-1">Outcome</div>
+                <div className="text-white/75">{outcome}</div>
+              </div>
+            </div>
+
+            <div className="flex flex-wrap gap-2">
+              {stack.map((t) => (
+                <motion.span
+                  key={t}
+                  className="px-4 py-2 rounded-full text-sm bg-white/5 border border-white/10 text-white/70"
+                  whileHover={{
+                    scale: 1.05,
+                    backgroundColor: 'rgba(168, 85, 247, 0.1)',
+                    borderColor: 'rgba(168, 85, 247, 0.3)',
+                  }}
+                >
+                  {t}
+                </motion.span>
+              ))}
+            </div>
 
             <div className="flex flex-wrap gap-2">
               {tags.map((tag) => (
@@ -191,19 +239,6 @@ export function FeaturedProjectCard({ title, description, tagline, tags }: Featu
               ))}
             </div>
 
-            <motion.button
-              className="self-start px-6 py-3 rounded-full backdrop-blur-sm bg-gradient-to-r from-[var(--neon-teal)]/20 to-[var(--neon-purple)]/20 border border-white/20 text-white flex items-center gap-2"
-              whileHover={{
-                scale: 1.05,
-                boxShadow: '0 0 40px rgba(0, 240, 255, 0.3)',
-              }}
-              whileTap={{ scale: 0.95 }}
-            >
-              View Project
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M7 17L17 7M17 7H7M17 7V17" />
-              </svg>
-            </motion.button>
           </div>
         </div>
 
